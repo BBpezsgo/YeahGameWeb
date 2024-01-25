@@ -75,7 +75,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           # Upload entire repository
-          path: './BuildJob/Published/wwwroot'
+          path: './BuildJob/Published/wwwroot/*'
           
       - name: Deploy to GitHub Pages
         id: deployment
