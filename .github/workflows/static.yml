@@ -46,29 +46,33 @@ jobs:
 
       - name: Check powershell version
         run: $host.Version
-        
+
       - name: Prepare build
         shell: powershell
         run: |
           mkdir BuildJob
-  
+
       - name: Cloning repositories
         shell: powershell
         working-directory: ./BuildJob
         run: |
           ..\clone-repos.ps1
-  
+
       - name: Building
         shell: powershell
         working-directory: ./BuildJob
         run: |
           ..\build.ps1
-  
+
       - name: Cleaning up the projects
         shell: powershell
         working-directory: ./BuildJob
         run: |
           ..\cleanup-projects.ps1
+
+      - name: Get-Location
+        shell: powershell
+        run: Get-Location
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -76,7 +80,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './BuildJob/Published/wwwroot/*'
+          path: './BuildJob/Published/wwwroot'
           
       - name: Deploy to GitHub Pages
         id: deployment
