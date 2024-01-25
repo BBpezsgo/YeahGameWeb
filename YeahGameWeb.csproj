@@ -6,6 +6,9 @@
     <Trimming>full</Trimming>
   </PropertyGroup>
   <ItemGroup>
+    <None Include=".github\workflows\static.yml" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Win32-Stuff\Win32.csproj" />
     <ProjectReference Include="..\YeahGame\YeahGame.csproj" />
   </ItemGroup>
