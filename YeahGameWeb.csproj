@@ -6,6 +6,12 @@
     <Trimming>full</Trimming>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="GithubRunner\**" />
+    <Content Remove="GithubRunner\**" />
+    <EmbeddedResource Remove="GithubRunner\**" />
+    <None Remove="GithubRunner\**" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include=".github\workflows\static.yml" />
   </ItemGroup>
   <ItemGroup>
