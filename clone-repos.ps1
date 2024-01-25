@@ -1,3 +1,9 @@
+if (Test-Path -Path ./YeahGameWeb) { } else
+{
+    mkdir ./YeahGameWeb
+    git clone https://github.com/BBpezsgo/YeahGameWeb.git ./YeahGameWeb
+}
+
 if (Test-Path -Path ./Win32-Stuff) { } else
 {
     mkdir ./Win32-Stuff
