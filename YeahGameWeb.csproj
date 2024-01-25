@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk.WebAssembly">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Nullable>enable</Nullable>
+    <Trimming>full</Trimming>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Win32-Stuff\Win32.csproj" />
+    <ProjectReference Include="..\YeahGame\YeahGame.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Update="wwwroot\*">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+</Project>

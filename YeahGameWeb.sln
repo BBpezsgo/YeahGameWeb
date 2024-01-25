@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34511.84
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YeahGameWeb", "YeahGameWeb.csproj", "{06B2F19D-3084-4EC4-B0AE-BD1044DFBA4C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Win32", "..\Win32-Stuff\Win32.csproj", "{8AD5E709-EC15-4A5E-A6B5-324D15C6BE11}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YeahGame", "..\YeahGame\YeahGame.csproj", "{81C4010E-2A64-43FB-95EC-71446E9C0C3B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{06B2F19D-3084-4EC4-B0AE-BD1044DFBA4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06B2F19D-3084-4EC4-B0AE-BD1044DFBA4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06B2F19D-3084-4EC4-B0AE-BD1044DFBA4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06B2F19D-3084-4EC4-B0AE-BD1044DFBA4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8AD5E709-EC15-4A5E-A6B5-324D15C6BE11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AD5E709-EC15-4A5E-A6B5-324D15C6BE11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AD5E709-EC15-4A5E-A6B5-324D15C6BE11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AD5E709-EC15-4A5E-A6B5-324D15C6BE11}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81C4010E-2A64-43FB-95EC-71446E9C0C3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81C4010E-2A64-43FB-95EC-71446E9C0C3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81C4010E-2A64-43FB-95EC-71446E9C0C3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81C4010E-2A64-43FB-95EC-71446E9C0C3B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9ACCACBF-8B46-4A75-B4E3-AC3214921BE0}
+	EndGlobalSection
+EndGlobal
