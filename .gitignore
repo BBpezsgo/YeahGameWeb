@@ -1,5 +1,8 @@
 ﻿/.vs
 /bin
 /obj
+/GithubRunner
 
 *.user
+
+/wwwroot/_framework/dotnet.d.ts

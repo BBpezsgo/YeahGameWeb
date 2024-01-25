@@ -2,7 +2,6 @@ import { dotnet } from './_framework/dotnet.js'
 import * as canvasLib from './canvas.js'
 
 const canvas = document.querySelector('canvas')
-// const labelFps = document.getElementById('label-fps')
 
 const canvasContext = canvas.getContext('2d', { alpha: false, willReadFrequently: false })
 window.canvasContext = canvasContext
@@ -17,11 +16,13 @@ setModuleImports('canvas.js', canvasLib.Create(canvas, canvasContext))
 const config = getConfig()
 const exports = await getAssemblyExports(config.mainAssemblyName)
 
+const exportedProgram = exports.YeahGame?.Web?.Program
+
 function RefreshCanvasSize() {
     canvas.width = window.innerWidth
     canvas.height = window.innerHeight
-    if (exports.WasmExp?.Program?.OnResize) {
-        exports.WasmExp.Program.OnResize()
+    if (exportedProgram?.OnResize) {
+        exportedProgram.OnResize()
     }
 }
 
@@ -29,65 +30,52 @@ RefreshCanvasSize()
 
 window.addEventListener('resize', function (e) { RefreshCanvasSize() })
 
-if (exports.WasmExp?.Program?.OnKeyDown) {
+if (exportedProgram?.OnKeyDown) {
     document.addEventListener('keydown', function (e) {
-        exports.WasmExp.Program.OnKeyDown(e.keyCode)
+        exportedProgram.OnKeyDown(e.keyCode)
     })
 }
 
-if (exports.WasmExp?.Program?.OnKeyUp) {
+if (exportedProgram?.OnKeyUp) {
     document.addEventListener('keyup', function (e) {
-        exports.WasmExp.Program.OnKeyUp(e.keyCode)
+        exportedProgram.OnKeyUp(e.keyCode)
     })
 }
 
-if (exports.WasmExp?.Program?.OnMouseMove) {
+if (exportedProgram?.OnMouseMove) {
     canvas.addEventListener('mousemove', function (e) {
-        exports.WasmExp.Program.OnMouseMove(e.offsetX, e.offsetY, e.button, e.ctrlKey)
+        exportedProgram.OnMouseMove(e.offsetX, e.offsetY, e.button, e.ctrlKey)
     })
 }
 
-if (exports.WasmExp?.Program?.OnMouseDown) {
+if (exportedProgram?.OnMouseDown) {
     canvas.addEventListener('mousedown', function (e) {
-        exports.WasmExp.Program.OnMouseDown(e.offsetX, e.offsetY, e.button, e.ctrlKey)
+        exportedProgram.OnMouseDown(e.offsetX, e.offsetY, e.button, e.ctrlKey)
     })
 }
 
-if (exports.WasmExp?.Program?.OnMouseUp) {
+if (exportedProgram?.OnMouseUp) {
     canvas.addEventListener('mouseup', function (e) {
-        exports.WasmExp.Program.OnMouseUp(e.offsetX, e.offsetY, e.button, e.ctrlKey)
+        exportedProgram.OnMouseUp(e.offsetX, e.offsetY, e.button, e.ctrlKey)
     })
 }
 
-if (exports.WasmExp?.Program?.OnMouseLeave) {
+if (exportedProgram?.OnMouseLeave) {
     canvas.addEventListener('mouseleave', function (e) {
-        exports.WasmExp.Program.OnMouseLeave(e.offsetX, e.offsetY, e.button, e.ctrlKey)
+        exportedProgram.OnMouseLeave(e.offsetX, e.offsetY, e.button, e.ctrlKey)
     })
 }
 
-if (exports.WasmExp?.Program?.OnAnimation) {
-    // let lastTime = 0
-
+if (exportedProgram?.OnAnimation) {
     /**
      * @param {DOMHighResTimeStamp} time
      */
     function OnAnimation(time) {
-        exports.WasmExp.Program.OnAnimation(time)
-
-        // const deltaTime = time - lastTime
-        // lastTime = time
-        // labelFps.textContent = Math.round(1 / (deltaTime / 1000)).toString()
-
+        exportedProgram.OnAnimation(time)
         requestAnimationFrame(OnAnimation)
     }
 
     requestAnimationFrame(OnAnimation)
-}
-
-if (exports.WasmExp?.Program?.OnTick) {
-    const ticker = setInterval(function() {
-        exports.WasmExp.Program.OnTick()
-    }, 10)
 }
 
 await dotnet.run()
