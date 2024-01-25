@@ -28,7 +28,7 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
 
-    runs-on: self-hosted
+    runs-on: windows-latest # self-hosted
 
     steps:
       - name: Checkout
