@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using System.Runtime.ExceptionServices;
 using System.Runtime.InteropServices.JavaScript;
 using Win32;
+using Win32.Common;
 using Win32.LowLevel;
 
 namespace YeahGame.Web;
@@ -16,8 +19,6 @@ public partial class Program
     static bool wasResized;
 
     static Game? Game;
-
-    static readonly Dictionary<int, Coord> Touches = new();
 
     public static void Main(string[] args)
     {
@@ -154,13 +155,16 @@ public partial class Program
         [JSMarshalAs<JSType.Array<JSType.Number>>] double[] ys,
         [JSMarshalAs<JSType.Array<JSType.Number>>] int[] ids)
     {
-        Touches.Clear();
-        for (int i = 0; i < ids.Length; i++)
-        { Touches[ids[i]] = GetMousePosition((float)xs[i], (float)ys[i]); }
+        Dictionary<int, Point> touches = Touch.UnsafeGetTouches();
+        Touch.UnsafeSetIsTouchDevice(true);
 
-        if (Touches.TryGetValue(0, out Coord touchPosition))
+        touches.Clear();
+        for (int i = 0; i < ids.Length; i++)
+        { touches[ids[i]] = GetMousePosition((float)xs[i], (float)ys[i]); }
+
+        if (touches.TryGetValue(0, out Point touchPosition))
         {
-            mousePosition = touchPosition;
+            mousePosition = (Coord)touchPosition;
             mouseButton = MouseButton.Left;
             Mouse.Feed(new MouseEvent(mousePosition, (uint)mouseButton, ctrlKeys, MouseEventFlags.MouseMoved));
         }
