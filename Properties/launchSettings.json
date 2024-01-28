@@ -1,6 +1,6 @@
 {
     "profiles": {
-      "WasmExp": {
+      "YeahGameWeb": {
         "commandName": "Project",
         "launchBrowser": true,
         "environmentVariables": {

@@ -8,6 +8,15 @@ public static partial class Canvas
     public static System.Threading.Tasks.Task<JSObject> LoadAsync()
         => JSHost.ImportAsync("canvas.js", "/canvas.js");
 
+    public static void SetFillStyle(Win32.Gdi32.GdiColor color)
+        => Canvas.SetFillStyle($"rgb({color.R},{color.G},{color.B})");
+
+    public static void SetFillStyle(System.Drawing.Color color)
+        => Canvas.SetFillStyle($"rgb({color.R},{color.G},{color.B})");
+
+    public static void SetFillStyle(byte r, byte g, byte b)
+        => Canvas.SetFillStyle($"rgb({r},{g},{b})");
+
     [JSImport("fillStyle_set", "canvas.js")]
     public static partial void SetFillStyle(
         [JSMarshalAs<JSType.String>] string fillStyle);
