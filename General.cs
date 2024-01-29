@@ -23,6 +23,10 @@ public static partial class General
     [return: JSMarshalAs<JSType.Number>]
     private static partial float window_outerHeight_get();
 
+    [JSImport("prompt", "general.js")]
+    [return: JSMarshalAs<JSType.String>]
+    public static partial string? Prompt(string? message, string? _default);
+
     public static int WindowInnerWidth => (int)window_innerWidth_get();
     public static int WindowInnerHeight => (int)window_innerHeight_get();
     public static int WindowOuterWidth => (int)window_outerWidth_get();

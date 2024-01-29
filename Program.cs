@@ -221,7 +221,7 @@ public partial class Program
     {
         ctrlKeys = GetCtrlKeyState(altKey, ctrlKey, shiftKey);
         mousePosition = GetMousePosition(x, y);
-        Mouse.Feed(new MouseEvent(mousePosition, Macros.MAKELONG(unchecked((ushort)(short)delta), (ushort)mouseButton), ctrlKeys, MouseEventFlags.MouseWheeled));
+        Mouse.Feed(new MouseEvent(mousePosition, BitUtils.MakeLong(unchecked((ushort)(short)delta), (ushort)mouseButton), ctrlKeys, MouseEventFlags.MouseWheeled));
     }
 
     [JSExport]
@@ -279,6 +279,13 @@ public partial class Program
         // 
         // if (_canvas.IsVisible(mousePosition))
         // { _canvas[mousePosition] = new ConsoleChar('X', CharColor.BrightYellow); }
+
+        if (VirtualKeyboard.ShouldShowUp)
+        {
+            string? value = General.Prompt(VirtualKeyboard.PromptMessage, VirtualKeyboard.DefaultValue);
+            VirtualKeyboard.Submit(value ?? string.Empty);
+            VirtualKeyboard.Hide();
+        }
 
         Game.Tick();
 

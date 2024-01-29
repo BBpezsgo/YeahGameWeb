@@ -1,5 +1,6 @@
 import { dotnet } from './_framework/dotnet.js'
 import * as canvasLib from './canvas.js'
+import * as generalLib from './general.js'
 
 const canvas = document.querySelector('canvas')
 
@@ -12,6 +13,7 @@ const { setModuleImports, getAssemblyExports, getConfig } = await dotnet
     .create()
 
 setModuleImports('canvas.js', canvasLib.Create(canvas, canvasContext))
+setModuleImports('general.js', generalLib.Create())
 
 const config = getConfig()
 const exports = await getAssemblyExports(config.mainAssemblyName)
@@ -133,6 +135,11 @@ const KeyCodes =
     'KeyZ': 90,
 }
 
+const DisableyKeys = [
+    'F12',
+    'F5',
+]
+
 /**
  * @param {TouchList} touches
  */
@@ -178,6 +185,7 @@ if (exportedProgram.OnTouch) {
 
 if (exportedProgram?.OnKeyDown) {
     document.addEventListener('keydown', function (e) {
+        if (DisableyKeys.includes(e.key)) { return }
         // const vk = KeyCodes[e.code]
         // if (!vk) {
         //     console.warn(`Unknown key ${e.code}`)
@@ -190,6 +198,7 @@ if (exportedProgram?.OnKeyDown) {
 
 if (exportedProgram?.OnKeyUp) {
     document.addEventListener('keyup', function (e) {
+        if (DisableyKeys.includes(e.key)) { return }
         // const vk = KeyCodes[e.code]
         // if (!vk) {
         //     console.warn(`Unknown key ${e.code}`)

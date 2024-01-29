@@ -5,5 +5,7 @@ export function Create() {
 		
 		window_outerWidth_get: function () { return window.outerWidth },
 		window_outerHeight_get: function () { return window.outerHeight },
+
+		prompt: function (message, _default ) { return prompt(message, _default) },
 	}
 }

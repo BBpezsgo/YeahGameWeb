@@ -50,7 +50,7 @@ public class CanvasRenderer : BufferedRenderer<ConsoleChar>
 
                 if (!first)
                 {
-                    Canvas.SetFont($"{PixelHeight}px Consolas");
+                    Canvas.SetFont($"{PixelHeight}px Consolas, monaco, monospace");
                     _drawCalls++;
                     first = true;
                 }
