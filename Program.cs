@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Diagnostics;
-using System.Linq;
-using System.Runtime.ExceptionServices;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices.JavaScript;
+using System.Text;
+using System.Web;
 using Win32;
 using Win32.Common;
 using Win32.LowLevel;
@@ -19,6 +21,20 @@ public partial class Program
     static bool wasResized;
 
     static Game? Game;
+
+    [return: NotNullIfNotNull(nameof(data))]
+    public static string? Encode(string? data)
+    {
+        if (data is null) return data;
+        return HttpUtility.UrlEncode(Convert.ToBase64String(Encoding.ASCII.GetBytes(data)));
+    }
+
+    [return: NotNullIfNotNull(nameof(data))]
+    public static string? Decode(string? data)
+    {
+        if (data is null) return data;
+        return Encoding.ASCII.GetString(Convert.FromBase64String(HttpUtility.UrlDecode(data)));
+    }
 
     public static void Main(string[] args)
     {
@@ -40,6 +56,32 @@ public partial class Program
         Trace.Listeners.Add(new TextWriterTraceListener(Console.Out));
 
         Debug.WriteLine("Started");
+
+        Uri uri = General.Location;
+        NameValueCollection query = HttpUtility.ParseQueryString(uri.Query);
+
+        string? queryParam;
+
+        if ((queryParam = query["host"]) is not null)
+        {
+            Console.WriteLine("Hosting");
+            WebRTCConnection<PlayerInfo> webRTC = new();
+            Game.Connection = webRTC;
+            Game.Singleton.SetupConnectionListeners();
+
+            webRTC.StartHost();
+        }
+        else if ((queryParam = query["join"]) is not null)
+        {
+            string offer = Program.Decode(queryParam);
+            Console.WriteLine($"Joining to \"{offer}\"");
+
+            WebRTCConnection<PlayerInfo> webRTC = new();
+            Game.Connection = webRTC;
+            Game.Singleton.SetupConnectionListeners();
+
+            webRTC.StartClient(offer);
+        }
     }
 
     static ControlKeyState GetCtrlKeyState(bool altKey, bool ctrlKey, bool shiftKey)
@@ -83,6 +125,9 @@ public partial class Program
         y /= _canvas.PixelHeight;
         return new Coord((int)x, (int)y);
     }
+
+    [JSExport]
+    public static void WebRTCAnswer(string answer) => P2P.Answer(Program.Decode(answer));
 
     [JSExport]
     public static void OnResize()
@@ -280,7 +325,8 @@ public partial class Program
         // if (_canvas.IsVisible(mousePosition))
         // { _canvas[mousePosition] = new ConsoleChar('X', CharColor.BrightYellow); }
 
-        if (VirtualKeyboard.ShouldShowUp)
+        if (VirtualKeyboard.ShouldShowUp &&
+            Touch.IsTouchDevice)
         {
             string? value = General.Prompt(VirtualKeyboard.PromptMessage, VirtualKeyboard.DefaultValue);
             VirtualKeyboard.Submit(value ?? string.Empty);

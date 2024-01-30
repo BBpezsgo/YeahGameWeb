@@ -10,6 +10,26 @@ public class CanvasRenderer : BufferedRenderer<ConsoleChar>
     int _width;
     int _height;
 
+    static readonly string[] CharColorMap = new string[0b_1_0000]
+    {
+        "#000", // 0b_0000,
+        "#0f3abd", // 0b_0001,
+        "#0c8229", // 0b_0010,
+        "#05919c", // 0b_0011,
+        "#850303", // 0b_0100,
+        "#99059c", // 0b_0101,
+        "#b5b502", // 0b_0110,
+        "#bbb", // 0b_0111,
+        "#666", // 0b_1000,
+        "#3570f0", // 0b_1001,
+        "#54d13b", // 0b_1010,
+        "#3de8eb", // 0b_1011,
+        "#eb3d43", // 0b_1100,
+        "#d946db", // 0b_1101,
+        "#d7e657", // 0b_1110,
+        "#fff", // 0b_1111,
+    };
+
     public override short Height => (short)_height;
     public override short Width => (short)_width;
 
@@ -119,7 +139,7 @@ public class CanvasRenderer : BufferedRenderer<ConsoleChar>
         currentColor = color;
         _drawCalls++;
 
-        Canvas.SetFillStyle(CharColor.GetColor(color));
+        Canvas.SetFillStyle(CharColorMap[color]);
     }
 
     public override void RefreshBufferSize()

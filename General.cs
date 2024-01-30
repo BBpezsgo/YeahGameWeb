@@ -1,3 +1,4 @@
+using System;
 using System.Runtime.InteropServices.JavaScript;
 
 namespace YeahGame.Web;
@@ -23,6 +24,10 @@ public static partial class General
     [return: JSMarshalAs<JSType.Number>]
     private static partial float window_outerHeight_get();
 
+    [JSImport("window_location_get", "general.js")]
+    [return: JSMarshalAs<JSType.String>]
+    private static partial string window_location_get();
+
     [JSImport("prompt", "general.js")]
     [return: JSMarshalAs<JSType.String>]
     public static partial string? Prompt(string? message, string? _default);
@@ -31,4 +36,6 @@ public static partial class General
     public static int WindowInnerHeight => (int)window_innerHeight_get();
     public static int WindowOuterWidth => (int)window_outerWidth_get();
     public static int WindowOuterHeight => (int)window_outerHeight_get();
+
+    public static Uri Location => new(window_location_get());
 }

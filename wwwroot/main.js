@@ -1,6 +1,8 @@
 import { dotnet } from './_framework/dotnet.js'
 import * as canvasLib from './canvas.js'
 import * as generalLib from './general.js'
+import * as p2pLib from './p2plib.js'
+import P2P from './p2p.js'
 
 const canvas = document.querySelector('canvas')
 
@@ -12,13 +14,21 @@ const { setModuleImports, getAssemblyExports, getConfig } = await dotnet
     .withApplicationArgumentsFromQuery()
     .create()
 
+const p2p = new P2P()
+window.p2p = p2p
+
 setModuleImports('canvas.js', canvasLib.Create(canvas, canvasContext))
 setModuleImports('general.js', generalLib.Create())
+setModuleImports('p2plib.js', p2pLib.Create(p2p))
 
 const config = getConfig()
 const exports = await getAssemblyExports(config.mainAssemblyName)
 
 const exportedProgram = exports.YeahGame?.Web?.Program
+
+if (exportedProgram.WebRTCAnswer) {
+    window.Accept = (answer) => { exportedProgram.WebRTCAnswer(answer) }
+}
 
 function RefreshCanvasSize() {
     canvas.width = window.innerWidth

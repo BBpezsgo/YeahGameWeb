@@ -6,6 +6,8 @@ export function Create() {
 		window_outerWidth_get: function () { return window.outerWidth },
 		window_outerHeight_get: function () { return window.outerHeight },
 
+		window_location_get: function () { return window.location.href },
+
 		prompt: function (message, _default ) { return prompt(message, _default) },
 	}
 }
