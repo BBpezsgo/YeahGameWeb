@@ -1,14 +1,12 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using YeahGame.Messages;
 using YeahGame.Web;
-using ConnectionClientDetails = System.Net.WebSockets.WebSocket;
 
 namespace YeahGame;
 
-public class WebRTCConnection<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)] TUserInfo> : ConnectionBase<TUserInfo, ConnectionClientDetails> where TUserInfo : ISerializable
+public class WebRTCConnection : Connection<object?>
 {
     public override IPEndPoint? RemoteEndPoint => null;
 
@@ -82,6 +80,15 @@ public class WebRTCConnection<[DynamicallyAccessedMembers(DynamicallyAccessedMem
         while (_incomingQueue2.TryDequeue(out string? message))
         {
             OnReceivedInternal(message);
+        }
+
+        if (_isServer)
+        {
+            TickServer();
+        }
+        else
+        {
+            TickClient();
         }
     }
 

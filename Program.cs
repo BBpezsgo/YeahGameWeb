@@ -65,7 +65,7 @@ public partial class Program
         if ((queryParam = query["host"]) is not null)
         {
             Console.WriteLine("Hosting");
-            WebRTCConnection<PlayerInfo> webRTC = new();
+            WebRTCConnection webRTC = new();
             Game.Connection = webRTC;
             Game.Singleton.SetupConnectionListeners();
 
@@ -76,7 +76,7 @@ public partial class Program
             string offer = Program.Decode(queryParam);
             Console.WriteLine($"Joining to \"{offer}\"");
 
-            WebRTCConnection<PlayerInfo> webRTC = new();
+            WebRTCConnection webRTC = new();
             Game.Connection = webRTC;
             Game.Singleton.SetupConnectionListeners();
 
