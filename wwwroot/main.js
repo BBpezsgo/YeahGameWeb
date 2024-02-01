@@ -4,6 +4,8 @@ import * as generalLib from './general.js'
 import * as p2pLib from './p2plib.js'
 import P2P from './p2p.js'
 
+if (!window) { throw new Error('Expected to be running in a browser') }
+
 const canvas = document.querySelector('canvas')
 
 const canvasContext = canvas.getContext('2d', { alpha: false, willReadFrequently: false })

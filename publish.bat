@@ -1,0 +1,1 @@
+dotnet publish ./YeahGameWeb.csproj --configuration Release --runtime browser-wasm --self-contained true -p:PublishTrimmed=true -p:PublishAot=false --output ./Published
