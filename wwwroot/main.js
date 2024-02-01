@@ -3,6 +3,7 @@ import * as canvasLib from './canvas.js'
 import * as generalLib from './general.js'
 import * as p2pLib from './p2plib.js'
 import P2P from './p2p.js'
+import * as storageLib from './storage.js'
 
 if (!window) { throw new Error('Expected to be running in a browser') }
 
@@ -25,6 +26,7 @@ window.p2p = p2p
 setModuleImports('canvas.js', canvasLib.Create(canvas, canvasContext))
 setModuleImports('general.js', generalLib.Create())
 setModuleImports('p2plib.js', p2pLib.Create(p2p))
+setModuleImports('storage.js', storageLib.Create())
 
 console.log('Loading JS imports ...')
 

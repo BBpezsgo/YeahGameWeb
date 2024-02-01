@@ -50,6 +50,16 @@ public partial class Program
         //     Console.WriteLine(b.ToString());
         // }
 
+        Biscuit.Saver = (data) =>
+        {
+            Storage.Set("biscuit", data);
+        };
+
+        Biscuit.Loader = () =>
+        {
+            return Storage.Get("biscuit");
+        };
+
         _canvas = new CanvasRenderer(Canvas.Width, Canvas.Height, 8, 16);
         Game = new Game(_canvas);
 
