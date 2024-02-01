@@ -6,15 +6,18 @@ import P2P from './p2p.js'
 
 if (!window) { throw new Error('Expected to be running in a browser') }
 
-const canvas = document.querySelector('canvas')
-
-const canvasContext = canvas.getContext('2d', { alpha: false, willReadFrequently: false })
-window.canvasContext = canvasContext
-
+console.log('Loading .NET ...')
 const { setModuleImports, getAssemblyExports, getConfig } = await dotnet
     .withDiagnosticTracing(false)
     .withApplicationArgumentsFromQuery()
     .create()
+
+console.log('Loading JS exports ...')
+
+const canvas = document.querySelector('canvas')
+
+const canvasContext = canvas.getContext('2d', { alpha: false, willReadFrequently: false })
+window.canvasContext = canvasContext
 
 const p2p = new P2P()
 window.p2p = p2p
@@ -23,10 +26,14 @@ setModuleImports('canvas.js', canvasLib.Create(canvas, canvasContext))
 setModuleImports('general.js', generalLib.Create())
 setModuleImports('p2plib.js', p2pLib.Create(p2p))
 
+console.log('Loading JS imports ...')
+
 const config = getConfig()
 const exports = await getAssemblyExports(config.mainAssemblyName)
 
 const exportedProgram = exports.YeahGame?.Web?.Program
+
+console.log('Setting up listeners ...')
 
 if (exportedProgram.WebRTCAnswer) {
     window.Accept = (answer) => { exportedProgram.WebRTCAnswer(answer) }
@@ -262,5 +269,7 @@ if (exportedProgram?.OnAnimation) {
 
     requestAnimationFrame(OnAnimation)
 }
+
+console.log('Starting .NET app ...')
 
 await dotnet.run()
